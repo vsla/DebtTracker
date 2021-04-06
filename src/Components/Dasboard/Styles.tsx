@@ -5,11 +5,11 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
+      display: "block",
     },
     drawer: {
       border: 0,
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         width: drawerWidth,
         flexShrink: 0,
       },
@@ -18,14 +18,15 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: theme.mixins.toolbar,
 
     appBar: {
-      [theme.breakpoints.up("sm")]: {
+      // background: theme.palette.background.default,
+      [theme.breakpoints.up("md")]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
       },
     },
     menuButton: {
       marginRight: theme.spacing(2),
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up("md")]: {
         display: "none",
       },
     },
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+      [theme.breakpoints.up("md")]: {
+        marginLeft: 240,
+      },
     },
   })
 );

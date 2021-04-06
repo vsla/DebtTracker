@@ -23,6 +23,7 @@ interface Props {
 export default function DashboardLayout({ children, type }: Props) {
   const classes = useStyles();
   const theme = useTheme();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -36,7 +37,7 @@ export default function DashboardLayout({ children, type }: Props) {
       <CssBaseline />
       <AppBar
         position="fixed"
-        elevation={0}
+        elevation={1}
         color="secondary"
         className={classes.appBar}
       >
@@ -56,7 +57,7 @@ export default function DashboardLayout({ children, type }: Props) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
+        <Hidden xlUp implementation="css">
           <Drawer
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
@@ -72,7 +73,7 @@ export default function DashboardLayout({ children, type }: Props) {
             <DrawerContent handleClickMenu={handleClickMenu} />
           </Drawer>
         </Hidden>
-        <Hidden xsDown implementation="css">
+        <Hidden smDown implementation="css">
           <Drawer
             classes={{
               paper: classes.drawerPaper,

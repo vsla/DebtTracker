@@ -10,7 +10,7 @@ const Theme = createMuiTheme({
     },
     type: "light",
     background: {
-      default: "#ffffff",
+      default: "#fffbf4",
     },
     contrastThreshold: 3,
     tonalOffset: 0.2,
@@ -20,6 +20,13 @@ const Theme = createMuiTheme({
       minHeight: 80,
     },
   },
+  overrides: {
+    MuiButton: {
+      containedPrimary: {
+        background: 'black'
+      }
+    }
+  }
 });
 
 export default Theme;

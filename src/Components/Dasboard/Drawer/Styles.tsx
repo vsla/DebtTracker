@@ -14,6 +14,20 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "ceter",
       justifyContent: "center",
       padding: 8,
+      position:'relative',
+      boxShadow:
+        "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+      "&:after": {
+        content: "''",
+        width: 2,
+        height: '60%',
+        backgroundColor: theme.palette.primary.main,
+        top: '20%',
+        right: 0,
+        position:'absolute',
+
+      },
+      // background: theme.palette.background.default,
     },
     mainIcon: {
       height: 60,
@@ -23,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: theme.palette.primary.dark,
       display: "flex",
       flexGrow: 1,
-      borderRadius: "10px 10px 0px 0px ",
+      // borderRadius: "10px 10px 0px 0px ",
     },
     list: {
       color: theme.palette.primary.contrastText,
