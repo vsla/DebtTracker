@@ -1,14 +1,14 @@
-<h1 align="center">
+<!-- <h1 align="center">
   <img alt="TrackingDelivery" title="#TrackingDelivery" src="./Docs/GithubProfile.jpg" style="width:100%;"/>
-</h1>
-<h1 align="center">🛵 Tracking Delivery</h1>
+</h1> -->
+<h1 align="center">Debt Tracker</h1>
 
-<p align="center">Developing a delivery app</p>
+<p align="center">Developing a Debt Tracker Interface</p>
 
 <p align="center">
-  <img alt="Forks" src='https://img.shields.io/github/forks/vsla/TrackingDelivery'> 
-  <img alt="Issues" src='https://img.shields.io/github/issues/vsla/TrackingDelivery'> 
-  <img alt="Starts" src='https://img.shields.io/github/stars/vsla/TrackingDelivery'>
+  <img alt="Forks" src='https://img.shields.io/github/forks/vsla/DebtTracker'> 
+  <img alt="Issues" src='https://img.shields.io/github/issues/vsla/DebtTracker'> 
+  <img alt="Starts" src='https://img.shields.io/github/stars/vsla/DebtTracker'>
 </p>
 
 ## Summary
@@ -31,7 +31,7 @@ The following tools were used to develop this project:
 
 * Material Ui
 * React router
-
+* Axios
 
 ## ⚡ Running the app
 
@@ -39,7 +39,10 @@ The following tools were used to develop this project:
 # Clonning the repo
 $ git clone 
 
-# Enter in the folder
+# Install all the dependencies
+$ yarn install
+
+# Run the project
 $ yarn run
 
 ```
