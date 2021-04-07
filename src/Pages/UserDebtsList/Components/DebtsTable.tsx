@@ -5,12 +5,11 @@ import { Grid } from "@material-ui/core";
 import { getAllUsers } from "Services/UserService";
 
 import { UserInterface } from "Interfaces/UserIntefaces";
-import { useHistory } from "react-router";
+import UserDebts from "./UserDebts";
 
 export default function UsersTable() {
   const [users, setUsers] = useState<Array<UserInterface>>([]);
-
-  const history = useHistory();
+  const [userSelected, setUserSelected] = useState<UserInterface | null>(null);
 
   const getUsers = async () => {
     const { data } = await getAllUsers();
@@ -19,7 +18,7 @@ export default function UsersTable() {
   };
 
   const handleUserDebts = async (user: UserInterface | null) => {
-    history.push('/');
+    setUserSelected(user);
   };
 
   useEffect(() => {
@@ -29,6 +28,7 @@ export default function UsersTable() {
   return (
     <Grid container>
       <Grid item xs={12}>
+        <UserDebts userSelected={userSelected} handleUserDebts={handleUserDebts} />
         <Table
           data={users}
           tableHeaders={["Nome"]}

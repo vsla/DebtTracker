@@ -38,6 +38,12 @@ interface DialogProps {
   children: React.ReactNode;
   handleClose: () => void;
   open: boolean;
+  title: String;
+  actionButton?: {
+    hasActionButton: boolean;
+    titleActionButton: String;
+    onClick: () => void;
+  };
 }
 
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
@@ -71,7 +77,22 @@ const DialogActions = withStyles((theme: Theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function Dialog({ children, open, handleClose }: DialogProps) {
+export default function Dialog({
+  children,
+  open,
+  handleClose,
+  title,
+  actionButton = {
+    hasActionButton: false,
+    titleActionButton: "",
+    onClick: () => {},
+  },
+}: DialogProps) {
+  const {
+    hasActionButton,
+    titleActionButton,
+    onClick: onClickAction,
+  } = actionButton;
   return (
     <MaterialDialog
       onClose={() => {
@@ -81,13 +102,15 @@ export default function Dialog({ children, open, handleClose }: DialogProps) {
       open={open}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Modal title
+        {title}
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
-          Save changes
-        </Button>
+        {hasActionButton && (
+          <Button autoFocus onClick={onClickAction} color="primary">
+            {titleActionButton}
+          </Button>
+        )}
       </DialogActions>
     </MaterialDialog>
   );

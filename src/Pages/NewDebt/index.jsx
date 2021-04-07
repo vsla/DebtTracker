@@ -35,7 +35,7 @@ export default function UserDebts({ userSelected, handleUserDebts }: Props) {
   }, [userSelected]);
 
   return (
-    <Dialog open={open} handleClose={handleClose}>
+    <Dialog title="Novo débito" open={open} handleClose={handleClose}>
       <Table
         data={debts}
         tableHeaders={["Nome"]}
