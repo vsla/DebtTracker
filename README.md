@@ -43,6 +43,10 @@ $ git clone
 # Install all the dependencies
 $ yarn install
 
+# Create a .env file in the root of te project
+# with the following variable
+REACT_APP_UUID=ef2987e6-3c42-4a24-b734-a2facff977cc
+
 # Run the project
 $ yarn run
 
