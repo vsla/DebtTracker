@@ -22,7 +22,7 @@ export const getUsersWithDebt = async (): Promise<UserListInterface> => {
 
     let usersWithDebt: number[] = [];
 
-    data.result.map(({ idUsuario }: DebtInterface) => {
+    data.result.forEach(({ idUsuario }: DebtInterface) => {
       if (!usersWithDebt.includes(idUsuario)) {
         usersWithDebt.push(idUsuario);
       }
