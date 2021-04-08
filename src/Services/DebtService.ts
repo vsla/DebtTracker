@@ -58,9 +58,10 @@ export const updateDebt = async (
 
 export const deleteDebt = async (id: string): Promise<any> => {
   try {
-    const response = await apiProvaDev.delete("/divida" + id);
+    const response = await apiProvaDev.delete("/divida/" + id);
     return response;
   } catch (error) {
     console.warn(error);
+    return { error };
   }
 };

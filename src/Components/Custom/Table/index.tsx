@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { RemoveRedEye } from "@material-ui/icons";
+import { Delete, RemoveRedEye } from "@material-ui/icons";
 import {
   Button,
   CircularProgress,
@@ -89,17 +89,28 @@ interface seeButton {
   onClick?: (data: any) => {} | undefined;
   Icon?: JSX.Element;
 }
+interface deleteButton {
+  showDeleteButton: boolean;
+  onClick?: (data: any) => {} | undefined;
+  Icon?: JSX.Element;
+}
 
 interface rowInterface {
   row: UserInterface | DebtInterface;
   tableRowOrder: Array<string>;
   rowSeebutton: seeButton;
+  rowDeleteButton: deleteButton;
 }
 
 function Row({
   row,
   tableRowOrder,
   rowSeebutton: { showSeeButton, onClick, Icon = <RemoveRedEye /> },
+  rowDeleteButton: {
+    showDeleteButton,
+    onClick: onClickDelete,
+    Icon: IconDelete = <Delete />,
+  },
 }: rowInterface) {
   return (
     <TableRow>
@@ -114,6 +125,20 @@ function Row({
             }}
           >
             {Icon}
+          </IconButton>
+        </TableCell>
+      )}
+      {showDeleteButton && (
+        <TableCell padding="checkbox">
+          <IconButton
+            aria-label="open debts"
+            onClick={() => {
+              if (onClickDelete) {
+                onClickDelete(row);
+              }
+            }}
+          >
+            {IconDelete}
           </IconButton>
         </TableCell>
       )}
@@ -149,6 +174,7 @@ interface Props {
   tableHeaders: Array<String>;
   tableRowOrder: Array<string>;
   rowSeebutton: seeButton;
+  rowDeleteButton?: deleteButton;
   headerAddButton?: headerButton;
   emptyMessage: String;
   loading: boolean;
@@ -160,6 +186,7 @@ export default function Table({
   tableHeaders,
   tableRowOrder,
   rowSeebutton,
+  rowDeleteButton = { showDeleteButton: false },
   headerAddButton,
   emptyMessage,
   loading,
@@ -174,6 +201,7 @@ export default function Table({
         <TableHead>
           <TableRow>
             <TableCell size="small" />
+            {rowDeleteButton.showDeleteButton && <TableCell size="small" />}
             {tableHeaders.map((tableHead) => (
               <TableCell>{tableHead}</TableCell>
             ))}
@@ -193,6 +221,7 @@ export default function Table({
               <Row
                 row={row}
                 rowSeebutton={rowSeebutton}
+                rowDeleteButton={rowDeleteButton}
                 tableRowOrder={tableRowOrder}
               />
             ))}

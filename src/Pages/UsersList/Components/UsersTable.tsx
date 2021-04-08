@@ -7,6 +7,7 @@ import { getUsersWithDebt } from "Services/UserService";
 import { UserInterface } from "Interfaces/UserIntefaces";
 import { useHistory } from "react-router";
 import DebtForm from "Pages/DebtForm";
+import { DebtInterface } from "Interfaces/DebInterface";
 
 export default function UsersTable() {
   const [loading, setLoading] = useState(true);
@@ -68,6 +69,7 @@ export default function UsersTable() {
             onClick: handleNewDebt,
           }}
           rowSeebutton={{ onClick: handleUserDebts, showSeeButton: true }}
+          rowDeleteButton={{ onClick: handleUserDebts, showDeleteButton: true }}
         />
       </Grid>
     </Grid>
