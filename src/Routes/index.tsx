@@ -5,16 +5,17 @@ import {
   Redirect,
 } from "react-router-dom";
 import UsersList from "../Pages/UsersList";
+import UserDebtsList from "../Pages/UserDebtsList";
 
 export default function Routes() {
   return (
     <Router>
       <Switch>
-        <Route path="/usuarios">
+        <Route exact path="/usuarios">
           <UsersList />
         </Route>
-        <Route path="/usuarios/:id">
-          <UsersList />
+        <Route exact path="/usuarios/:id">
+          <UserDebtsList />
         </Route>
 
         <Redirect to="/usuarios" />

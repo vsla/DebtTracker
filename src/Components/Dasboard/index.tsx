@@ -14,21 +14,40 @@ import { useTheme } from "@material-ui/core/styles";
 
 import useStyles from "./Styles";
 import DrawerContent from "./Drawer";
+import { Button } from "@material-ui/core";
+import { ArrowBack } from "@material-ui/icons";
+import { useHistory } from "react-router";
 
 interface Props {
   children: JSX.Element;
   type: "Débitos";
+  title: String;
+  back?: {
+    showBackButton?: boolean;
+    backTitle?: String;
+    to: String;
+  };
 }
 
-export default function DashboardLayout({ children, type }: Props) {
+export default function DashboardLayout({
+  children,
+  type,
+  title,
+  back = { showBackButton: false, to: "" },
+}: Props) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const { showBackButton, backTitle, to } = back;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const handleBack = () => history.push(to);
 
   const handleClickMenu = (actualClick: string): void => {};
 
@@ -52,10 +71,11 @@ export default function DashboardLayout({ children, type }: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Débitos dos usuários
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
+
       <nav className={classes.drawer} aria-label="mailbox folders">
         <Hidden xlUp implementation="css">
           <Drawer
@@ -85,9 +105,23 @@ export default function DashboardLayout({ children, type }: Props) {
           </Drawer>
         </Hidden>
       </nav>
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}
+        {showBackButton && (
+          <div className={classes.backButton}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<ArrowBack />}
+              onClick={handleBack}
+            >
+              {backTitle}
+            </Button>
+          </div>
+        )}
+
+        <div className={classes.rootContent}>{children}</div>
       </main>
     </div>
   );

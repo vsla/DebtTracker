@@ -1,10 +1,14 @@
 import DashboardLayout from "Components/Dasboard";
-import UsersTable from "./Components/DebtsTable";
+import DebtsTable from "./Components/DebtsTable";
 
-export default function UsersList() {
+export default function UserDebtsList() {
   return (
-    <DashboardLayout type="Débitos">
-      <UsersTable />
+    <DashboardLayout
+      back={{ showBackButton: true, backTitle: "voltar", to: "/usuarios" }}
+      title="Lista de débitos"
+      type="Débitos"
+    >
+      <DebtsTable />
     </DashboardLayout>
   );
 }

@@ -1,8 +1,8 @@
 export interface DebtInterface {
   [key: string]: any;
-  _id: number;
+  _id: String;
   motivo: String;
-  valor: number;
+  valor: String;
   idUsuario: number;
   uuid: String;
   criado: String;

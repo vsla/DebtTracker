@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) =>
         marginLeft: 240,
       },
     },
+    backButton: {
+      marginBottom: theme.spacing(2),
+    },
+    rootContent: {},
   })
 );
 
