@@ -1,6 +1,10 @@
 import { apiProvaDev } from "./api";
 
-import { DebtListInterface, DebtInterface } from "Interfaces/DebInterface";
+import {
+  DebtListInterface,
+  DebtInterface,
+  DebtFormInterface,
+} from "Interfaces/DebInterface";
 
 export const getUserDebts = async (
   userId: string
@@ -14,7 +18,37 @@ export const getUserDebts = async (
       ({ idUsuario }: DebtInterface) => idUsuario === parseInt(userId, 10)
     );
   } catch (error) {
-    console.error(error);
+    console.warn(error);
   }
   return [];
+};
+
+export const createDebt = async (debt: DebtFormInterface): Promise<any> => {
+  try {
+    const response = await apiProvaDev.post("/divida", debt);
+    return response;
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+export const updateDebt = async (
+  debt: DebtFormInterface,
+  id: string
+): Promise<any> => {
+  try {
+    const response = await apiProvaDev.patch("/divida/" + id, debt);
+    return response;
+  } catch (error) {
+    console.warn(error);
+  }
+};
+
+export const deleteDebt = async (id: string): Promise<any> => {
+  try {
+    const response = await apiProvaDev.delete("/divida" + id);
+    return response;
+  } catch (error) {
+    console.warn(error);
+  }
 };

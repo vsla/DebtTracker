@@ -4,13 +4,13 @@ import { UserListInterface, UserInterface } from "Interfaces/UserIntefaces";
 
 export const getAllUsers = async (): Promise<UserListInterface> => {
   try {
-    const response = await apiJsonPlaceholder.get("users");
+    const { data } = await apiJsonPlaceholder.get("users");
 
-    return response;
+    return data;
   } catch (error) {
     console.error(error);
   }
-  return { data: [] };
+  return [];
 };
 
 export const getOneUser = async (id: String): Promise<UserInterface> => {
@@ -20,6 +20,6 @@ export const getOneUser = async (id: String): Promise<UserInterface> => {
     return response.data;
   } catch (error) {
     console.error(error);
+    return error;
   }
-  return { data: [] };
 };
