@@ -25,7 +25,7 @@ interface Props {
   back?: {
     showBackButton?: boolean;
     backTitle?: String;
-    to: String;
+    to: string;
   };
 }
 

@@ -15,7 +15,7 @@ export default function UsersTable() {
 
   const getUsers = async () => {
     setLoading(true);
-    const { data } = await getAllUsers();
+    const data = await getAllUsers();
 
     setUsers(data);
     setLoading(false);

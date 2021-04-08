@@ -23,10 +23,16 @@ const Theme = createMuiTheme({
   overrides: {
     MuiButton: {
       containedPrimary: {
-        background: 'black'
-      }
-    }
-  }
+        background: "black",
+      },
+    },
+    MuiTypography: {
+      subtitle2: {
+        color: "#de0000",
+        marginLeft: 8,
+      },
+    },
+  },
 });
 
 export default Theme;

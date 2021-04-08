@@ -57,11 +57,12 @@ const EnhancedTableToolbar = ({
   headerAddButton = {
     showButton: false,
     text: "",
+    onClick: () => {},
   },
   tableTitle,
 }: EnhancedTableToolbarProps) => {
   const classes = useToolbarStyles();
-  const { showButton, text } = headerAddButton;
+  const { showButton, text, onClick } = headerAddButton;
 
   return (
     <Toolbar className={classes.root}>
@@ -75,7 +76,7 @@ const EnhancedTableToolbar = ({
       </Typography>
 
       {showButton && (
-        <Button variant="contained" color="primary" onClick={() => {}}>
+        <Button variant="contained" color="primary" onClick={onClick}>
           {text}
         </Button>
       )}
@@ -86,6 +87,7 @@ const EnhancedTableToolbar = ({
 interface seeButton {
   showSeeButton: boolean;
   onClick?: (data: any) => {} | undefined;
+  Icon?: JSX.Element;
 }
 
 interface rowInterface {
@@ -97,7 +99,7 @@ interface rowInterface {
 function Row({
   row,
   tableRowOrder,
-  rowSeebutton: { showSeeButton, onClick },
+  rowSeebutton: { showSeeButton, onClick, Icon = <RemoveRedEye /> },
 }: rowInterface) {
   return (
     <TableRow>
@@ -111,7 +113,7 @@ function Row({
               }
             }}
           >
-            <RemoveRedEye />
+            {Icon}
           </IconButton>
         </TableCell>
       )}

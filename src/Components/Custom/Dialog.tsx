@@ -38,6 +38,8 @@ interface DialogProps {
   children: React.ReactNode;
   handleClose: () => void;
   open: boolean;
+  fullWidth: boolean;
+  maxWidth: false | "xs" | "sm" | "md" | "lg" | "xl" | undefined;
   title: String;
   actionButton?: {
     hasActionButton: boolean;
@@ -82,6 +84,8 @@ export default function Dialog({
   open,
   handleClose,
   title,
+  fullWidth,
+  maxWidth,
   actionButton = {
     hasActionButton: false,
     titleActionButton: "",
@@ -95,6 +99,8 @@ export default function Dialog({
   } = actionButton;
   return (
     <MaterialDialog
+      fullWidth={fullWidth}
+      maxWidth={maxWidth}
       onClose={() => {
         handleClose();
       }}
