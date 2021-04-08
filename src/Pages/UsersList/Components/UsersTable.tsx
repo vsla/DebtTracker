@@ -7,15 +7,18 @@ import { getUsersWithDebt } from "Services/UserService";
 import { UserInterface } from "Interfaces/UserIntefaces";
 import { useHistory } from "react-router";
 import DebtForm from "Pages/DebtForm";
-import { DebtInterface } from "Interfaces/DebInterface";
+
+import DebtModalDelete from "Pages/DebtModalDelete";
 
 export default function UsersTable() {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<Array<UserInterface>>([]);
 
-  const [debtSelected, setDebtSelected] = useState<DebtInterface | null>(null);
   const [editForm, setEditForm] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
+
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [deleteObject, setDeleteObject] = useState<UserInterface | null>(null);
 
   const history = useHistory();
 
@@ -31,10 +34,6 @@ export default function UsersTable() {
     history.push("/usuarios/" + user?.id);
   };
 
-  useEffect(() => {
-    getUsers();
-  }, []);
-
   const handleNewDebt = () => {
     setEditForm(false);
     setOpen(true);
@@ -47,14 +46,37 @@ export default function UsersTable() {
     }
   };
 
+  const handleDeleteOpen = (reload: boolean): void => {
+    setOpenDelete(!openDelete);
+    if (reload) {
+      getUsers();
+    }
+  };
+
+  const handleDelete = async (user: UserInterface | null) => {
+    setDeleteObject(user);
+
+    setOpenDelete(true);
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <Grid container>
       <Grid item xs={12}>
         <DebtForm
           edit={editForm}
-          debt={debtSelected}
+          debt={null}
           open={open}
           setOpen={handleDialogOpen}
+        />
+        <DebtModalDelete
+          open={openDelete}
+          setOpen={handleDeleteOpen}
+          deleteObject={deleteObject}
+          deleteAllDebts
         />
         <Table
           tableTitle="Veja o débito dos usuários"
@@ -69,7 +91,10 @@ export default function UsersTable() {
             onClick: handleNewDebt,
           }}
           rowSeebutton={{ onClick: handleUserDebts, showSeeButton: true }}
-          rowDeleteButton={{ onClick: handleUserDebts, showDeleteButton: true }}
+          rowDeleteButton={{
+            onClick: handleDelete,
+            showDeleteButton: true,
+          }}
         />
       </Grid>
     </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "Components/Custom/Dialog";
 
 import { DebtInterface } from "Interfaces/DebInterface";
@@ -8,6 +8,7 @@ import { Typography } from "@material-ui/core";
 import { UserInterface } from "Interfaces/UserIntefaces";
 
 import { deleteDebt } from "Services/DebtService";
+import { deleteOneUser } from "Services/UserService";
 
 interface Props {
   // userSelected: UserInterface | null;
@@ -23,7 +24,7 @@ export default function DebtModalDelete({
   open,
   setOpen,
 }: Props) {
-  console.log(deleteObject);
+  const [loading, setLoading] = useState(false);
 
   const { title, buttonText } = deleteAllDebts
     ? { title: "Deletar usuário", buttonText: "Deletar" }
@@ -34,13 +35,13 @@ export default function DebtModalDelete({
   };
 
   const sendDelete = async () => {
+    setLoading(true);
     if (deleteObject !== null) {
       if (deleteAllDebts) {
-        // const { _id } = debt;
-        // const response = await updateDebt({ idUsuario, motivo, valor }, _id);
-        // if (!response.error) {
-        //   setOpen(true);
-        // }
+        const { id } = deleteObject;
+        await deleteOneUser(id);
+
+        setOpen(true);
       } else {
         const { _id } = deleteObject;
         const response = await deleteDebt(_id);
@@ -49,6 +50,7 @@ export default function DebtModalDelete({
         }
       }
     }
+    setLoading(false);
   };
 
   const renderContent = (): React.ReactNode => {
@@ -74,6 +76,7 @@ export default function DebtModalDelete({
         hasActionButton: true,
         titleActionButton: buttonText,
         onClick: sendDelete,
+        loading: loading,
       }}
     >
       {renderContent()}

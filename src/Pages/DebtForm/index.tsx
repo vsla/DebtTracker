@@ -27,13 +27,18 @@ const SignupSchema = Yup.object().shape({
 
 interface Props {
   // userSelected: UserInterface | null;
-  debt: DebtInterface | null;
+  debt?: DebtInterface | null;
   edit?: boolean;
   open: boolean;
   setOpen: (reload: boolean) => void;
 }
 
-export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
+export default function DebtForm({
+  edit = false,
+  open,
+  setOpen,
+  debt = null,
+}: Props) {
   const [users, setUsers] = useState<UserListInterface | []>([]);
 
   const { title, buttonText } = edit

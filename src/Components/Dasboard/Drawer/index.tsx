@@ -30,8 +30,6 @@ export default function DrawerContent({ handleClickMenu }: Props) {
     Icon,
     actualRoute,
   }: Item): React.ReactNode => {
-    console.log(text);
-    
     return (
       <div
         className={classNames(classes.rootItem, {
