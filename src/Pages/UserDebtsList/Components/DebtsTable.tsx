@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import Table from "Components/Custom/Table";
 import { Grid } from "@material-ui/core";
