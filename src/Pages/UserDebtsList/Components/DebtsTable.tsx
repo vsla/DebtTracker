@@ -15,10 +15,9 @@ export default function UsersTable() {
   let { id } = useParams<{ id: string }>();
   const [userName, setUserName] = useState<String>("");
   const [userDebts, setUserDebts] = useState<Array<DebtInterface>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [debtSelected, setDebtSelected] = useState<DebtInterface | null>(null);
-
-  const [loading, setLoading] = useState<boolean>(true);
   const [editForm, setEditForm] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
 
