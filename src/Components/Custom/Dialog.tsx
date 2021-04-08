@@ -13,6 +13,7 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+import { CircularProgress } from "@material-ui/core";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -45,6 +46,7 @@ interface DialogProps {
     hasActionButton: boolean;
     titleActionButton: String;
     onClick: () => void;
+    loading?: boolean;
   };
 }
 
@@ -90,12 +92,14 @@ export default function Dialog({
     hasActionButton: false,
     titleActionButton: "",
     onClick: () => {},
+    loading: false,
   },
 }: DialogProps) {
   const {
     hasActionButton,
     titleActionButton,
     onClick: onClickAction,
+    loading,
   } = actionButton;
   return (
     <MaterialDialog
@@ -112,10 +116,13 @@ export default function Dialog({
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
       <DialogActions>
-        {hasActionButton && (
+        {hasActionButton && !loading && (
           <Button autoFocus onClick={onClickAction} color="primary">
             {titleActionButton}
           </Button>
+        )}
+         {hasActionButton && loading && (
+         <CircularProgress color='primary'/>
         )}
       </DialogActions>
     </MaterialDialog>

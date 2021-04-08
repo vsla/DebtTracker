@@ -4,7 +4,7 @@ import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
 import List from "@material-ui/core/List";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import classNames from "classnames";
 
@@ -35,6 +35,7 @@ export default function DrawerContent({ handleClickMenu }: Props) {
         className={classNames(classes.rootItem, {
           [classes.actualItem]: actualRoute,
         })}
+        key={text}
       >
         <ListItem
           button

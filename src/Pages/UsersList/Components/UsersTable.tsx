@@ -2,20 +2,29 @@ import { useState, useEffect } from "react";
 import Table from "Components/Custom/Table";
 import { Grid } from "@material-ui/core";
 
-import { getAllUsers } from "Services/UserService";
+import { getUsersWithDebt } from "Services/UserService";
 
 import { UserInterface } from "Interfaces/UserIntefaces";
 import { useHistory } from "react-router";
+import DebtForm from "Pages/DebtForm";
+
+import DebtModalDelete from "Pages/DebtModalDelete";
 
 export default function UsersTable() {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<Array<UserInterface>>([]);
 
+  const [editForm, setEditForm] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [deleteObject, setDeleteObject] = useState<UserInterface | null>(null);
+
   const history = useHistory();
 
   const getUsers = async () => {
     setLoading(true);
-    const data = await getAllUsers();
+    const data = await getUsersWithDebt();
 
     setUsers(data);
     setLoading(false);
@@ -25,6 +34,31 @@ export default function UsersTable() {
     history.push("/usuarios/" + user?.id);
   };
 
+  const handleNewDebt = () => {
+    setEditForm(false);
+    setOpen(true);
+  };
+
+  const handleDialogOpen = (reload: boolean): void => {
+    setOpen(!open);
+    if (reload) {
+      getUsers();
+    }
+  };
+
+  const handleDeleteOpen = (reload: boolean): void => {
+    setOpenDelete(!openDelete);
+    if (reload) {
+      getUsers();
+    }
+  };
+
+  const handleDelete = async (user: UserInterface | null) => {
+    setDeleteObject(user);
+
+    setOpenDelete(true);
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -32,6 +66,18 @@ export default function UsersTable() {
   return (
     <Grid container>
       <Grid item xs={12}>
+        <DebtForm
+          edit={editForm}
+          debt={null}
+          open={open}
+          setOpen={handleDialogOpen}
+        />
+        <DebtModalDelete
+          open={openDelete}
+          setOpen={handleDeleteOpen}
+          deleteObject={deleteObject}
+          deleteAllDebts
+        />
         <Table
           tableTitle="Veja o débito dos usuários"
           loading={loading}
@@ -40,9 +86,15 @@ export default function UsersTable() {
           tableHeaders={["Nome"]}
           tableRowOrder={["name"]}
           headerAddButton={{
-            showButton: false,
+            showButton: true,
+            text: "Nova dívida",
+            onClick: handleNewDebt,
           }}
           rowSeebutton={{ onClick: handleUserDebts, showSeeButton: true }}
+          rowDeleteButton={{
+            onClick: handleDelete,
+            showDeleteButton: true,
+          }}
         />
       </Grid>
     </Grid>

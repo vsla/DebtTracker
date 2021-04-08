@@ -15,7 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { UserInterface, UserListInterface } from "Interfaces/UserIntefaces";
 import { getAllUsers } from "Services/UserService";
-import { createDebt } from "Services/DebtService";
+import { createDebt, updateDebt } from "Services/DebtService";
 
 import * as Yup from "yup";
 
@@ -27,14 +27,23 @@ const SignupSchema = Yup.object().shape({
 
 interface Props {
   // userSelected: UserInterface | null;
-  debt: DebtInterface | null;
+  debt?: DebtInterface | null;
   edit?: boolean;
   open: boolean;
   setOpen: (reload: boolean) => void;
 }
 
-export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
+export default function DebtForm({
+  edit = false,
+  open,
+  setOpen,
+  debt = null,
+}: Props) {
   const [users, setUsers] = useState<UserListInterface | []>([]);
+
+  const { title, buttonText } = edit
+    ? { title: "Editar Débito", buttonText: "Editar" }
+    : { title: "Nova Débito", buttonText: "Criar" };
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +77,11 @@ export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
 
   const sendForm = async ({ idUsuario, motivo, valor }: DebtFormInterface) => {
     if (debt !== null) {
-      // const { _id } = debt;
+      const { _id } = debt;
+      const response = await updateDebt({ idUsuario, motivo, valor }, _id);
+      if (!response.error) {
+        setOpen(true);
+      }
     } else {
       const response = await createDebt({ idUsuario, motivo, valor });
       if (!response.error) {
@@ -81,7 +94,7 @@ export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
     <Dialog
       fullWidth
       maxWidth={"xs"}
-      title="Novo débito"
+      title={title}
       open={open}
       handleClose={handleClose}
     >
@@ -154,7 +167,7 @@ export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
               </Grid>
               <Grid item container xs={12} justify="flex-end">
                 <Button variant="contained" color="primary" type="submit">
-                  Criar
+                  {buttonText}
                 </Button>
               </Grid>
             </Grid>

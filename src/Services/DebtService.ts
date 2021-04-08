@@ -23,6 +23,18 @@ export const getUserDebts = async (
   return [];
 };
 
+export const getAllDebts = async (): Promise<{
+  data: { result: Array<DebtInterface> };
+}> => {
+  try {
+    const response = await apiProvaDev.get("/divida");
+    return response;
+  } catch (error) {
+    console.warn(error);
+    return { data: { result: [] } };
+  }
+};
+
 export const createDebt = async (debt: DebtFormInterface): Promise<any> => {
   try {
     const response = await apiProvaDev.post("/divida", debt);
@@ -46,9 +58,10 @@ export const updateDebt = async (
 
 export const deleteDebt = async (id: string): Promise<any> => {
   try {
-    const response = await apiProvaDev.delete("/divida" + id);
+    const response = await apiProvaDev.delete("/divida/" + id);
     return response;
   } catch (error) {
     console.warn(error);
+    return { error };
   }
 };

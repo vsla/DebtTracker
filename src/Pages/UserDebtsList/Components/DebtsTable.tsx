@@ -10,17 +10,20 @@ import { useParams } from "react-router";
 import { getUserDebts } from "Services/DebtService";
 import DebtForm from "Pages/DebtForm";
 import { Edit } from "@material-ui/icons";
+import DebtModalDelete from "Pages/DebtModalDelete";
 
 export default function UsersTable() {
   let { id } = useParams<{ id: string }>();
   const [userName, setUserName] = useState<String>("");
   const [userDebts, setUserDebts] = useState<Array<DebtInterface>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [debtSelected, setDebtSelected] = useState<DebtInterface | null>(null);
-
-  const [loading, setLoading] = useState<boolean>(true);
   const [editForm, setEditForm] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
+
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [deleteObject, setDeleteObject] = useState<DebtInterface | null>(null);
 
   const getUsersDebts = async () => {
     setLoading(true);
@@ -57,6 +60,19 @@ export default function UsersTable() {
     }
   };
 
+  const handleDeleteOpen = (reload: boolean): void => {
+    setOpenDelete(!openDelete);
+    if (reload) {
+      getUsersDebts();
+    }
+  };
+
+  const handleDelete = async (debt: DebtInterface | null) => {
+    setDeleteObject(debt);
+
+    setOpenDelete(true);
+  };
+
   useEffect(() => {
     getUserName();
     getUsersDebts();
@@ -70,6 +86,11 @@ export default function UsersTable() {
           debt={debtSelected}
           open={open}
           setOpen={handleDialogOpen}
+        />
+        <DebtModalDelete
+          open={openDelete}
+          setOpen={handleDeleteOpen}
+          deleteObject={deleteObject}
         />
         <Table
           tableTitle={"Débitos do usuário: " + userName}
@@ -87,6 +108,10 @@ export default function UsersTable() {
             onClick: handleSeeDebt,
             showSeeButton: true,
             Icon: <Edit />,
+          }}
+          rowDeleteButton={{
+            onClick: handleDelete,
+            showDeleteButton: true,
           }}
         />
       </Grid>
