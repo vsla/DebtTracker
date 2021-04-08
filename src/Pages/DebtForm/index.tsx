@@ -15,7 +15,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { UserInterface, UserListInterface } from "Interfaces/UserIntefaces";
 import { getAllUsers } from "Services/UserService";
-import { isNull } from "node:util";
 import { createDebt } from "Services/DebtService";
 
 import * as Yup from "yup";
@@ -57,13 +56,13 @@ export default function DebtForm({ edit = false, open, setOpen, debt }: Props) {
       return {
         motivo,
         valor,
-        idUsuario: toString(),
+        idUsuario: idUsuario.toString(),
       };
     }
     return {
       motivo: "",
       valor: "",
-      idUsuario: '',
+      idUsuario: "",
     };
   };
 
