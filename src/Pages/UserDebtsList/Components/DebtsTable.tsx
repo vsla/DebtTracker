@@ -2,42 +2,62 @@ import { useState, useEffect } from "react";
 import Table from "Components/Custom/Table";
 import { Grid } from "@material-ui/core";
 
-import { getAllUsers } from "Services/UserService";
+import { getAllUsers, getOneUser } from "Services/UserService";
 
-import { UserInterface } from "Interfaces/UserIntefaces";
-import UserDebts from "./UserDebts";
+import { DebtInterface } from "Interfaces/DebInterface";
+import { useLocation, useParams } from "react-router";
+import { getUserDebts } from "Services/DebtService";
+// import UserDebts from "./UserDebts";
 
 export default function UsersTable() {
-  const [users, setUsers] = useState<Array<UserInterface>>([]);
-  const [userSelected, setUserSelected] = useState<UserInterface | null>(null);
+  let { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<String>("");
+  const [userDebts, setUserDebts] = useState<Array<DebtInterface>>([]);
+  const [debtSelected, setDebtSelected] = useState<DebtInterface | null>(null);
 
-  const getUsers = async () => {
-    const { data } = await getAllUsers();
+  const getUsersDebts = async () => {
+    setLoading(true);
+    const debts = await getUserDebts(id);
+    console.log(debts);
 
-    setUsers(data);
+    setUserDebts(debts);
+    setLoading(false);
   };
 
-  const handleUserDebts = async (user: UserInterface | null) => {
-    setUserSelected(user);
+  const getUserName = async () => {
+    const response = await getOneUser(id);
+    if (!response.error) {
+      const { name } = response;
+      setUserName(name);
+    }
+  };
+
+  const handleSeeDebt = async (debt: DebtInterface | null) => {
+    setDebtSelected(debt);
   };
 
   useEffect(() => {
-    getUsers();
+    getUserName();
+    getUsersDebts();
   }, []);
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <UserDebts userSelected={userSelected} handleUserDebts={handleUserDebts} />
+        {/* <UserDebts userSelected={userSelected} handleUserDebts={handleUserDebts} /> */}
         <Table
-          data={users}
-          tableHeaders={["Nome"]}
-          tableRowOrder={["username"]}
+          tableTitle={"Débitos do usuário: " + userName}
+          loading={loading}
+          data={userDebts}
+          tableHeaders={["id", "Motivo", "Valor", "Data de criação"]}
+          tableRowOrder={["_id", "motivo", "valor", "criado"]}
+          emptyMessage="O usuário não tem débitos"
           headerAddButton={{
             showButton: true,
             text: "Nova dívida",
           }}
-          rowSeebutton={{ onClick: handleUserDebts, showSeeButton: true }}
+          rowSeebutton={{ onClick: handleSeeDebt, showSeeButton: true }}
         />
       </Grid>
     </Grid>
